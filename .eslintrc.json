@@ -19,6 +19,8 @@
     "prettier"
   ],
   "rules": {
+    "delete": "on",
+    "camelcase": "off",
     "prettier/prettier": "error",
     "class-methods-use-this": "off",
     "import/extensions": [
