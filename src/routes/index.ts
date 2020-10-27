@@ -7,5 +7,5 @@ const app = Router();
 
 app.use('/appointments', appointmentRouter);
 app.use('/users', usersRouter);
-app.use('/sessions', sessionsRouter)
+app.use('/sessions', sessionsRouter);
 export default app;

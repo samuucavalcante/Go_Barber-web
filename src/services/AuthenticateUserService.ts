@@ -1,32 +1,46 @@
 import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
 import User from '../models/User';
+
+import AuthConfig from '../config/Auth';
 
 interface Request {
   email: string;
   password: string;
 }
 
-class AuthenticateUserService {
-  public async execute({ email, password }: Request): Promise<{ user: User }> {
-    const usersRepository = getRepository(User);
+interface Response {
+  user: User;
+  token: string;
+}
 
-    const user = await usersRepository.findOne({ where: { email } });
+class AuthenticateUserService {
+  public async execute({ email, password }: Request): Promise<Response> {
+    const userRepository = getRepository(User);
+
+    const user = await userRepository.findOne({ where: { email } });
 
     if (!user) {
       throw new Error('Incorrect email/password combination.');
     }
-    // user.password - Senha criptografada
-    // password - Senha não criptografada
+
     const passwordMatched = await compare(password, user.password);
 
     if (!passwordMatched) {
       throw new Error('Incorrect email/password combination.');
     }
-    // Usuario authenticado
+
+    const { secret, expiresIn } = AuthConfig.jwt;
+
+    const token = sign({}, secret, {
+      subject: user.id,
+      expiresIn,
+    });
 
     return {
       user,
+      token,
     };
   }
 }
