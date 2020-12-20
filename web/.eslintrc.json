@@ -22,12 +22,11 @@
         "react",
         "react-hooks",
         "@typescript-eslint",
-        "@typescript-eslint",
         "prettier"
     ],
     "rules": {
-        "prettier/prettier": "error",
         "no-use-before-define": "off",
+        "prettier/prettier": "error",
         "react/jsx-one-expression-per-line": "off",
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
