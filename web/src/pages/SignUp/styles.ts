@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
 
-import signInBackgroundImg from '../../assets/sign-in-background.png';
+import signUpBackgroundImg from '../../assets/sign-up-background.png';
 
 export const Container = styled.div`
   height: 100vh;
@@ -46,7 +46,6 @@ export const Content = styled.div`
     text-decoration: none;
     transition: color 0.2s;
     display: flex;
-    justify-content: center;
     align-items: center;
     svg {
       margin-right: 16px;
@@ -58,7 +57,7 @@ export const Content = styled.div`
 `;
 
 export const Background = styled.div`
-  background: url(${signInBackgroundImg}) no-repeat center;
+  background: url(${signUpBackgroundImg}) no-repeat center;
   flex: 1;
   background-size: cover;
 `;
