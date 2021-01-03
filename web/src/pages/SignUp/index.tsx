@@ -5,7 +5,7 @@ import { FiArrowLeft, FiMail, FiUser, FiLock } from 'react-icons/fi';
 import * as Yup from 'yup';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
-import { ValidationError } from 'yup';
+import { Link } from 'react-router-dom';
 import { Container, Background, Content } from './styles';
 
 import getValidationErrors from '../../utils/getValidationErrors';
@@ -57,12 +57,11 @@ const SignUp: React.FC = () => {
             placeholder="Password"
           />
           <Button type="submit">Entrar</Button>
-          <a href="outra coisa">Esqueci minha senha</a>
         </Form>
-        <a href="qualquer coisa">
+        <Link to="/">
           <FiArrowLeft />
-          Criar conta
-        </a>
+          Fazer logon
+        </Link>
       </Content>
     </Container>
   );

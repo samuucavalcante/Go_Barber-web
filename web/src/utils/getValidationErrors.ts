@@ -1,5 +1,3 @@
-import { Key } from 'readline';
-import { ObjectTypeDeclaration } from 'typescript';
 import { ValidationError } from 'yup';
 
 interface Errors {

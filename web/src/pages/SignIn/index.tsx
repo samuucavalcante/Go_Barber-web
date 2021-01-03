@@ -4,6 +4,7 @@ import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import { FormHandles } from '@unform/core';
+import { Link } from 'react-router-dom';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { Container, Background, Content } from './styles';
 
@@ -17,6 +18,8 @@ const SignIn: React.FC = () => {
 
   const handleSubmit = useCallback(async (data) => {
     try {
+      formRef.current?.setErrors({});
+
       const schema = Yup.object().shape({
         email: Yup.string()
           .required('Digite um e-mail')
@@ -50,10 +53,10 @@ const SignIn: React.FC = () => {
           <Button type="submit">Entrar</Button>
           <a href="outra coisa">Esqueci minha senha</a>
         </Form>
-        <a href="qualquer coisa">
+        <Link to="/register">
           <FiLogIn />
           Criar conta
-        </a>
+        </Link>
       </Content>
       <Background />
     </Container>

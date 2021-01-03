@@ -30,6 +30,9 @@ export const Container = styled.div<ContainerProps>`
     props.isErrored &&
     css`
       border-color: #c53030;
+      .icon {
+        display: block;
+      }
     `}
 
   ${(props) =>
@@ -37,12 +40,20 @@ export const Container = styled.div<ContainerProps>`
     css`
       color: #ff9000;
       border-color: #ff9000;
+      .icon {
+        display: block;
+      }
     `}
   ${(props) =>
     props.isFilled &&
     css`
       color: #ff9000;
+      .icon {
+        display: block;
+      }
     `}
+
+
 
   input {
     flex: 1;
