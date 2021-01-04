@@ -8,15 +8,24 @@ import { Link } from 'react-router-dom';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { Container, Background, Content } from './styles';
 
+import { useAuth } from '../../hooks/auth';
+
 import logoImg from '../../assets/logo.svg';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 const SignIn: React.FC = () => {
+  const { signIn } = useAuth();
+
+  interface Data {
+    email: string;
+    password: string;
+  }
+
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit = useCallback(async (data) => {
+  const handleSubmit = useCallback(async (data: Data) => {
     try {
       formRef.current?.setErrors({});
 
@@ -29,6 +38,13 @@ const SignIn: React.FC = () => {
 
       await schema.validate(data, {
         abortEarly: false,
+      });
+
+      const { email, password } = data;
+
+      signIn({
+        email,
+        password,
       });
     } catch (err) {
       const errors = getValidationErrors(err);
