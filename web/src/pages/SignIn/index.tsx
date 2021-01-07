@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { Container, Background, Content } from './styles';
 
+import { useToast } from '../../hooks/toast';
 import { useAuth } from '../../hooks/auth';
 
 import logoImg from '../../assets/logo.svg';
@@ -17,7 +18,7 @@ import Input from '../../components/Input';
 
 const SignIn: React.FC = () => {
   const { signIn } = useAuth();
-
+  const { addToast } = useToast();
   interface Data {
     email: string;
     password: string;
@@ -52,11 +53,17 @@ const SignIn: React.FC = () => {
           const errors = getValidationErrors(err);
 
           formRef.current?.setErrors(errors);
+        } else {
+          addToast({
+            type: 'error',
+            title: 'Erro na autenticação',
+            description: 'Não foi possivel validar suas credenciais',
+          });
         }
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [signIn],
+    [signIn, addToast],
   );
 
   return (
