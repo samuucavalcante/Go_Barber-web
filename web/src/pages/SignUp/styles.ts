@@ -36,6 +36,7 @@ export const Content = styled.div`
     animation: ${toAppearToLeft} 1s;
     h1 {
       margin-bottom: 24px;
+      font-size: 32px;
     }
 
     a {

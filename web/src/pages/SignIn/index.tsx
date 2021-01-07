@@ -25,33 +25,39 @@ const SignIn: React.FC = () => {
 
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit = useCallback(async (data: Data) => {
-    try {
-      formRef.current?.setErrors({});
+  const handleSubmit = useCallback(
+    async (data: Data) => {
+      try {
+        formRef.current?.setErrors({});
 
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('Digite um e-mail')
-          .email('Digite um e-mail válido'),
-        password: Yup.string().required('Digite uma senha válida'),
-      });
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('Digite um e-mail')
+            .email('Digite um e-mail válido'),
+          password: Yup.string().required('Digite uma senha válida'),
+        });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      const { email, password } = data;
+        const { email, password } = data;
 
-      signIn({
-        email,
-        password,
-      });
-    } catch (err) {
-      const errors = getValidationErrors(err);
+        await signIn({
+          email,
+          password,
+        });
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
 
-      formRef.current?.setErrors(errors);
-    }
-  }, []);
+          formRef.current?.setErrors(errors);
+        }
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [signIn],
+  );
 
   return (
     <Container>
