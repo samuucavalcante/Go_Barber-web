@@ -7,8 +7,12 @@ interface SignInCredentials {
   password: string;
 }
 
+interface PropsUser {
+  [key: string]: string;
+}
+
 interface AuthContextData {
-  user: object;
+  user: PropsUser;
   signIn(credentials: SignInCredentials): Promise<void>;
 }
 

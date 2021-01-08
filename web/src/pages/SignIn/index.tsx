@@ -1,10 +1,10 @@
 import React, { useCallback, useRef } from 'react';
 
-import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
-import { Form } from '@unform/web';
 import * as Yup from 'yup';
+import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Link } from 'react-router-dom';
+import { Form } from '@unform/web';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { Container, Background, Content } from './styles';
 
@@ -16,13 +16,14 @@ import logoImg from '../../assets/logo.svg';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
+interface Data {
+  email: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
-  const { signIn } = useAuth();
+  const { signIn, user } = useAuth();
   const { addToast } = useToast();
-  interface Data {
-    email: string;
-    password: string;
-  }
 
   const formRef = useRef<FormHandles>(null);
 
@@ -48,6 +49,14 @@ const SignIn: React.FC = () => {
           email,
           password,
         });
+        addToast({
+          type: 'success',
+          title: `Bem vindo ${user.name.substring(0, user.name.indexOf(' '))}`,
+          description: `Oi ${user.name.substring(
+            0,
+            user.name.indexOf(' '),
+          )}, fazia muito que não te vejo`,
+        });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -62,8 +71,7 @@ const SignIn: React.FC = () => {
         }
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [signIn, addToast],
+    [signIn, addToast, user.name],
   );
 
   return (
