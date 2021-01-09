@@ -31,7 +31,6 @@ const SignIn: React.FC = () => {
     async (data: Data) => {
       try {
         formRef.current?.setErrors({});
-
         const schema = Yup.object().shape({
           email: Yup.string()
             .required('Digite um e-mail')
@@ -49,29 +48,21 @@ const SignIn: React.FC = () => {
           email,
           password,
         });
-        addToast({
-          type: 'success',
-          title: `Bem vindo ${user.name.substring(0, user.name.indexOf(' '))}`,
-          description: `Oi ${user.name.substring(
-            0,
-            user.name.indexOf(' '),
-          )}, fazia muito que não te vejo`,
-        });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
 
           formRef.current?.setErrors(errors);
-        } else {
-          addToast({
-            type: 'error',
-            title: 'Erro na autenticação',
-            description: 'Não foi possivel validar suas credenciais',
-          });
+          return;
         }
+        addToast({
+          type: 'error',
+          title: 'Erro na autenticação',
+          description: 'Não foi possivel validar suas credenciais',
+        });
       }
     },
-    [signIn, addToast, user.name],
+    [signIn, addToast, user],
   );
 
   return (
