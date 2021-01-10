@@ -3,7 +3,7 @@ import React, { useCallback, useRef } from 'react';
 import * as Yup from 'yup';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Form } from '@unform/web';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { Container, Background, Content } from './styles';
@@ -22,9 +22,9 @@ interface Data {
 }
 
 const SignIn: React.FC = () => {
-  const { signIn, user } = useAuth();
+  const { signIn } = useAuth();
   const { addToast } = useToast();
-
+  const history = useHistory();
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit = useCallback(
@@ -48,6 +48,14 @@ const SignIn: React.FC = () => {
           email,
           password,
         });
+
+        addToast({
+          type: 'success',
+          title: 'Hey, logado com sucesso!',
+          description: 'Nosso site está sempre atualizando, fique de olho.',
+        });
+
+        history.push('/dashboard');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -62,7 +70,7 @@ const SignIn: React.FC = () => {
         });
       }
     },
-    [signIn, addToast, user],
+    [signIn, addToast, history],
   );
 
   return (
