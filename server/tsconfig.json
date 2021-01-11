@@ -46,8 +46,13 @@
     "paths": {
       "@modules/*": ["modules/*"],
       "@config/*": ["config/*"],
+<<<<<<< HEAD
       "@shared/*": ["shared/*"]
     },                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
+=======
+      "@shared/*": ["shared/*"],
+    },                                        /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
+>>>>>>> cb2bc667f0ef75969603faeff3837d25bab5bf9a
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                       /* List of folders to include type definitions from. */
     // "types": [],                           /* Type declaration files to be included in compilation. */

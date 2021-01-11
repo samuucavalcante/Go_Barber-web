@@ -19,9 +19,20 @@
     "prettier"
   ],
   "rules": {
+    "no-useless-constructor": "off",
     "camelcase": "off",
     "prettier/prettier": "error",
+    "@typescript-eslint/camelcase": "off",
     "class-methods-use-this": "off",
+<<<<<<< HEAD
+=======
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "_"
+      }
+    ],
+>>>>>>> cb2bc667f0ef75969603faeff3837d25bab5bf9a
     "@typescript-eslint/naming-convention": [
       "error",
       {
