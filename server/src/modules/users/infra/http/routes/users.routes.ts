@@ -1,11 +1,13 @@
 import { Router } from 'express';
 import multer from 'multer';
-import uploadConfig from '../config/upload';
-import CreateUsersService from '../services/CreateUsersService';
+import uploadConfig from '@config/upload';
+import CreateUsersService from '@modules/users/services/CreateUsersService';
 
-import ensureAuthenticated from '../middleware/ensureAuthenticated';
+import UsersRepository from '@modules/users/infra/typeorm/repositories/UserRepositories';
 
-import UpdateUserAvatarService from '../services/UpdateUserAvatarService';
+import ensureAuthenticated from '@modules/users/infra/http/middleware/ensureAuthenticated';
+
+import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
@@ -14,7 +16,8 @@ usersRouter.post('/', async (request, response) => {
   try {
     const { name, email, password } = request.body;
 
-    const createUser = new CreateUsersService();
+    const usersRepository = new UsersRepository();
+    const createUser = new CreateUsersService(usersRepository);
 
     const user = await createUser.execute({
       name,
@@ -34,14 +37,14 @@ usersRouter.patch(
   upload.single('avatar'),
   async (request, response) => {
     try {
-      const updateUserAvatarService = new UpdateUserAvatarService();
+      const updateUserAvatarService = new UpdateUserAvatarService(
+        usersRepository,
+      );
 
       const user = await updateUserAvatarService.execute({
         user_id: request.user.id,
         avatarFilename: request.file.filename,
       });
-
-      delete user.password;
 
       return response.json(user);
     } catch (err) {
